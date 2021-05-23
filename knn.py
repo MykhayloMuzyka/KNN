@@ -5,10 +5,18 @@ from random import randint as rand
 import sys
 
 
-def knn(classificated, forClassification, k, distance, showPercentage = False):
+def knn(classificated: dict, forClassification:list, k: int, distance, showPercentage = False):
     res = []
-    classes = [i[1] for i in classificated.items()]
-    classes = list(np.unique(classes))
+    classesList = [i[1] for i in classificated.items()]
+    classes = list(np.unique(classesList))
+    classDict = {}
+    for c in classes:
+        classDict[c] = 0
+    for c in classesList:
+        classDict[c] += 1
+    classDict = sorted(classDict.items(), key=lambda x: x[1])
+    classes = classDict[::-1]
+    classes = [c[0] for c in classDict]
     c = 1
     if showPercentage:
         print('Classification (knn):')
